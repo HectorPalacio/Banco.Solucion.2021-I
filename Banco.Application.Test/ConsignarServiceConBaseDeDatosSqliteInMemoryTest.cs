@@ -2,7 +2,6 @@ using Banco.Application.Test.Dobles;
 using Banco.Domain;
 using Banco.Infrastructure.Data;
 using Banco.Infrastructure.Data.ObjectMother;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
@@ -21,7 +20,7 @@ namespace Banco.Application.Test
             //Arrange
             _mailServerSpy = new MailServerSpy();
             var optionsSqlite = new DbContextOptionsBuilder<BancoContext>()
-           .UseSqlite(SqlLiteDatabaseInMemory.CreateConnection())
+           .UseSqlServer(SqlServerDatabaseInMemory.CreateConnection())
            .Options;
 
             _dbContext = new BancoContext(optionsSqlite);

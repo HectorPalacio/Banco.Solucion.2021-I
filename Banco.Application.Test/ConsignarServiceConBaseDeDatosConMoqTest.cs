@@ -3,7 +3,6 @@ using Banco.Domain;
 using Banco.Domain.Contracts;
 using Banco.Infrastructure.Data;
 using Banco.Infrastructure.Data.ObjectMother;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -23,7 +22,7 @@ namespace Banco.Application.Test
             //Arrange
          
             var optionsSqlite = new DbContextOptionsBuilder<BancoContext>()
-           .UseSqlite(SqlLiteDatabaseInMemory.CreateConnection())
+           .UseSqlServer(SqlServerDatabaseInMemory.CreateConnection())
            .Options;
 
             _dbContext = new BancoContext(optionsSqlite);

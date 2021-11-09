@@ -10,7 +10,7 @@ namespace Banco.Infrastructure.Data
     public class BancoContext: DbContextBase
     {
         
-        public BancoContext(DbContextOptions options) : base(options)
+        public BancoContext(DbContextOptions<BancoContext> options) : base(options)
         {
 
         }

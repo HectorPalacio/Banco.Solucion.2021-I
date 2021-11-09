@@ -24,20 +24,24 @@ namespace Banco.Infrastructure.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = Configuration.GetConnectionString("BancoContext");//obtiene la configuracion del appsettitgs
+            //var connectionString = Configuration.GetConnectionString("BancoContext");//obtiene la configuracion del appsettitgs
 
-            services.AddDbContext<BancoContext>(opt => opt.UseSqlite(connectionString));
+            //services.AddDbContext<BancoContext>(options => options.Use(connectionString));
 
-            ///Inyección de dependencia Especifica
+            services.AddDbContext<BancoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("cadenaConexion"), b => b.MigrationsAssembly("Banco.Infrastructure.WebApi")));
+            services.AddControllersWithViews();
+
+            ///Inyecciï¿½n de dependencia Especifica
             //https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-3.0#register-additional-services-with-extension-methods
+
+
             services.AddScoped<IUnitOfWork, UnitOfWork>(); //Crear Instancia por peticion
             services.AddScoped<ICuentaBancariaRepository, CuentaBancariaRepository>(); //Crear Instancia por peticion
             services.AddScoped<IDbContext, BancoContext>(); //Crear Instancia por peticion
             services.AddScoped<IMailServer, MailServer>(); //Crear Instancia por peticion
             
-            //inyección del servicio de mail
+            //inyecciï¿½n del servicio de mail
 
-            services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Banco.Infrastructure.WebApi", Version = "v1" });

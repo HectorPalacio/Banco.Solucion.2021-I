@@ -31,7 +31,7 @@ namespace Banco.Application.Test
         {
             //Arrange
             var optionsSqlite = new DbContextOptionsBuilder<BancoContext>()
-           .UseSqlite(@"Data Source=bancoDataBaseTest.db")
+           .UseSqlServer(@"Data Source=bancoDataBaseTest.db")
            .Options;
 
             _dbContext = new BancoContext(optionsSqlite);

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Banco.Infrastructure.Data.Base
 {
-    public class DbContextBase : DbContext,IDbContext
+    public class DbContextBase : DbContext, IDbContext
     {
         public DbContextBase() 
         {

@@ -13,7 +13,7 @@ namespace Banco.Infrastructure.WebApi.Test.Base
         private readonly string _connectionString=@"Data Source=C:\sqlite\bancoDataBaseTest.db";
         public BancoContext CreateContext() 
         {
-            var builder = new DbContextOptionsBuilder<BancoContext>().UseSqlite(_connectionString);
+            var builder = new DbContextOptionsBuilder<BancoContext>().UseSqlServer(_connectionString);
             return new BancoContext(builder.Options);
         }
         protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -29,7 +29,7 @@ namespace Banco.Infrastructure.WebApi.Test.Base
 
                 services.AddDbContext<BancoContext>(options =>
                 {
-                    options.UseSqlite(_connectionString);
+                    options.UseSqlServer(_connectionString);
                 });
                 #endregion
 
