@@ -36,11 +36,11 @@ namespace Banco.Application
                                                 );
                 _cuentaRepository.Add(cuentaNueva);
                 _unitOfWork.Commit();
-                return $"Se creó con exito la cuenta {cuentaNueva.Numero}.";
+                return $"Se creó con exito la cuenta número {cuentaNueva.Numero}.";
             }
             else
             {
-                return  $"El número de cuenta ya exite";
+                return  $"El número de cuenta {cuenta.Numero} ya exite";
             }
         }
 

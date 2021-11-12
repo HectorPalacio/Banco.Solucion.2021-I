@@ -40,6 +40,17 @@ namespace Banco.Application
             return new ConsignarResponse(response);
         }
 
+        public RetirarResponse Retirar(RetirarRequest request){
+
+            var cuenta = _cuentaRepository.FindFirstOrDefault(cuenta=>cuenta.Numero== request.NumeroCuenta);//infraestructura-datos
+            if(cuenta == null) return new RetirarResponse("La cuenta no existe");
+            var response = cuenta.Retirar(request.Valor, request.Ciudad, request.FechaMovimiento);
+            _cuentaRepository.Update(cuenta);
+            _unitOfWork.Commit();
+            var responseMail=_emailServer.Send("Se efectúo consignación", cuenta.Email);//infraestructura-system
+            return new RetirarResponse(response);
+        }
+
     }
     public record ConsignarRequest(string NumeroCuenta, string Ciudad, decimal Valor, DateTime FechaMovimiento);
     public record ConsignarResponse 
@@ -57,5 +68,20 @@ namespace Banco.Application
         public string Mensaje { get; set; }
     }
 
+    public record RetirarRequest(string NumeroCuenta, string Ciudad, decimal Valor, DateTime FechaMovimiento);
 
+    public record RetirarResponse 
+    {
+        public RetirarResponse()
+        {
+
+        }
+
+        public RetirarResponse(string mensaje)
+        {
+            Mensaje = mensaje;
+        }
+
+        public string Mensaje { get; set; }
+    }
 }

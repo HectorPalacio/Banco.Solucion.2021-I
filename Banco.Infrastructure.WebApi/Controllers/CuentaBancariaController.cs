@@ -50,5 +50,13 @@ namespace Banco.Infrastructure.WebApi.Controllers
             var response = service.Consignar(request);
             return Ok(response);
         }
+
+        [HttpPost("Retiro")]
+        public ActionResult<RetirarResponse> PostRetirar(RetirarRequest request){
+            
+            var service = new ConsignarService(_unitOfWork, _cuentaBancariaRepository, _mailServer);
+            var response = service.Retirar(request);
+            return Ok(response);
+        }
     }
 }

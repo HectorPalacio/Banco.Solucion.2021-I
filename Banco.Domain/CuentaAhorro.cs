@@ -7,7 +7,7 @@ namespace Banco.Domain
     public class CuentaAhorro : CuentaBancaria
     {
 
-        public const decimal TOPERETIRO = 1000;
+        public const decimal TOPERETIRO = 10000;
 
         public CuentaAhorro(string numero, string nombre, string ciudad, string email) : base(numero, nombre, ciudad, email)
         {
@@ -15,24 +15,32 @@ namespace Banco.Domain
 
         public override string Retirar(decimal valor, string ciudad, DateTime fechaMovimiento)
         {
-            if (PuedeRetirar(valor).Any()) 
+            List<string> errores = new List<string>();
+            errores = PuedeRetirar(valor);
+            if (errores.Any()) 
             {
-                throw new CuentaAhorroTopeDeRetiroException("No es posible realizar el Retiro, Supera el tope mínimo permitido de retiro");
+                // throw new CuentaAhorroTopeDeRetiroException("No es posible realizar el Retiro");
+                return errores[0];
+            }else{
+                Saldo -= valor;
+                var retiro = new MovimientoFinanciero(this, valor,0, fechaMovimiento);
+                this.Movimientos.Add(retiro);
+                return "Se realizó  el retiro satisfactoriamenteXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
             }
-            Saldo -= valor;
-            var retiro = new MovimientoFinanciero(this, valor,0, fechaMovimiento);
-            this.Movimientos.Add(retiro);
-            return "Se realizó  el retiro satisfactoriamente";
         }
 
         public override List<string> PuedeRetirar(decimal valor) 
         {
             List<string> errors = new List<string>();
-            decimal nuevoSaldo = Saldo - valor;
-            if (nuevoSaldo <= TOPERETIRO) 
-            {
-                errors.Add("No es posible realizar el Retiro, Supera el tope mínimo permitido de retiro");
+            if(valor > Saldo){
+                errors.Add("No es posible realizar el retiro, el valor supera al saldo en la cuenta");
+            }else if(valor > TOPERETIRO){
+                errors.Add("No es posible realizar el retiro, supera el tope mínimo permitido de retiro");
             }
+            //decimal nuevoSaldo = Saldo - valor;
+            // if (nuevoSaldo <= TOPERETIRO) 
+            // {
+            // }
             return errors;
         }
         
