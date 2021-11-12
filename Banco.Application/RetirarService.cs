@@ -7,13 +7,13 @@ namespace Banco.Application
     /// <summary>
     /// Comando 
     /// </summary>
-    public class ConsignarService
+    public class RetirarService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICuentaBancariaRepository _cuentaRepository;
         private readonly IMailServer _emailServer;
 
-        public ConsignarService(
+        public RetirarService(
            IUnitOfWork unitOfWork,
            ICuentaBancariaRepository cuentaRepository,
            IMailServer emailServer
@@ -25,30 +25,29 @@ namespace Banco.Application
 
         }
 
-        public ConsignarResponse Consignar(ConsignarRequest request)
-        {
+        public RetirarResponse Retirar(RetirarRequest request){
+
             var cuenta = _cuentaRepository.FindFirstOrDefault(cuenta=>cuenta.Numero== request.NumeroCuenta);//infraestructura-datos
-            if (cuenta == null) return new ConsignarResponse("la cuenta no existe");
-            var response = cuenta.Consignar(request.Valor, request.Ciudad, request.FechaMovimiento);//domain
-            _cuentaRepository.Update(cuenta);//proyectarse el cambio y registrarlo en la unidad de trabajo
-            _unitOfWork.Commit();//infraestructura-datos
+            if(cuenta == null) return new RetirarResponse("La cuenta no existe");
+            var response = cuenta.Retirar(request.Valor, request.Ciudad, request.FechaMovimiento);
+            _cuentaRepository.Update(cuenta);
+            _unitOfWork.Commit();
             var responseMail=_emailServer.Send("Se efectúo consignación", cuenta.Email);//infraestructura-system
-           // if (responseMail != "Se envío el correo") 
-           // {
-           //      response += "- Hubo problemas enviando el correo";
-           // }
-            return new ConsignarResponse(response);
+            return new RetirarResponse(response);
         }
+
     }
-    public record ConsignarRequest(string NumeroCuenta, string Ciudad, decimal Valor, DateTime FechaMovimiento);
-    public record ConsignarResponse 
+
+    public record RetirarRequest(string NumeroCuenta, string Ciudad, decimal Valor, DateTime FechaMovimiento);
+
+    public record RetirarResponse 
     {
-        public ConsignarResponse()
+        public RetirarResponse()
         {
 
         }
 
-        public ConsignarResponse(string mensaje)
+        public RetirarResponse(string mensaje)
         {
             Mensaje = mensaje;
         }

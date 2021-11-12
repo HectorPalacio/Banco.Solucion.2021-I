@@ -54,7 +54,7 @@ namespace Banco.Infrastructure.WebApi.Controllers
         [HttpPost("Retiro")]
         public ActionResult<RetirarResponse> PostRetirar(RetirarRequest request){
             
-            var service = new ConsignarService(_unitOfWork, _cuentaBancariaRepository, _mailServer);
+            var service = new RetirarService(_unitOfWork, _cuentaBancariaRepository, _mailServer);
             var response = service.Retirar(request);
             return Ok(response);
         }

@@ -25,7 +25,7 @@ namespace Banco.Domain
                 Saldo -= valor;
                 var retiro = new MovimientoFinanciero(this, valor,0, fechaMovimiento);
                 this.Movimientos.Add(retiro);
-                return "Se realizó  el retiro satisfactoriamenteXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
+                return "Se realizó  el retiro satisfactoriamente";
             }
         }
 
