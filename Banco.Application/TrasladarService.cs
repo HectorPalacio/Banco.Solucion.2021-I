@@ -27,7 +27,7 @@ namespace Banco.Application
 
         }
 
-        public TrasladarResponse Handle(TrasladarRequest request)
+        public TrasladarResponse Trasladar(TrasladarRequest request)
         {
             List<string> errors = new List<string>();
             
@@ -52,7 +52,7 @@ namespace Banco.Application
             }
 
 
-            var response=cuentaOrigen.Trasladar(cuentaDestino, request.Valor, request.Ciudad, request.FechaMovimiento);
+            var response = cuentaOrigen.Trasladar(cuentaDestino, request.Valor, request.Ciudad, request.FechaMovimiento);
 
             _unitOfWork.Commit();
             return new TrasladarResponse(response);

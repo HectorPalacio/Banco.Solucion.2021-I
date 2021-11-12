@@ -69,7 +69,7 @@ namespace Banco.Application.Test
             
 
             //Act
-            var response = _trasladarService.Handle(
+            var response = _trasladarService.Trasladar(
                 new TrasladarRequest
                 (
                     cuentaAhorroOrigen.Numero, 
@@ -121,7 +121,7 @@ namespace Banco.Application.Test
 
 
             //Act
-            var response = _trasladarService.Handle(
+            var response = _trasladarService.Trasladar(
                 new TrasladarRequest
                 (
                     cuentaAhorroOrigen.Numero,

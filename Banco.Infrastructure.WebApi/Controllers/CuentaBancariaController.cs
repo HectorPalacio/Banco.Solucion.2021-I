@@ -58,5 +58,12 @@ namespace Banco.Infrastructure.WebApi.Controllers
             var response = service.Retirar(request);
             return Ok(response);
         }
+
+        [HttpPost("Trasladar")]
+        public ActionResult<TrasladarResponse> PostTrasladar(TrasladarRequest request){
+            var service = new TrasladarService(_unitOfWork, _cuentaBancariaRepository, _mailServer);
+            var response = service.Trasladar(request);
+            return Ok(response);
+        }
     }
 }
