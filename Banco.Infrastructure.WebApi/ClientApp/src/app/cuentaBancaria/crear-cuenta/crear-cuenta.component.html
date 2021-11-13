@@ -1,2 +1,23 @@
-<p>crear-cuenta works!</p>
-<h1>MI PRIMERA PAGINA</h1>
+<div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Nombre propietario</label>
+    <input type="email" class="form-control" id="exampleFormControlInput1" [(ngModel)]="nombre">
+</div>
+<div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Tipo de cuenta</label>
+    <input type="email" class="form-control" id="exampleFormControlInput1" [(ngModel)]="tipoCuenta">
+</div>
+<div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Número de cuenta</label>
+    <input type="email" class="form-control" id="exampleFormControlInput1" [(ngModel)]="numero">
+</div>
+<div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Ciudad propietario</label>
+    <input type="email" class="form-control" id="exampleFormControlInput1" [(ngModel)]="ciudad">
+</div>
+<div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Email propietario</label>
+    <input type="email" class="form-control" id="exampleFormControlInput1" [(ngModel)]="email">
+</div>
+<div class="col-auto">
+    <button type="submit" class="btn btn-primary mb-3" (click)="addCuenta()">Crear cuenta</button>
+</div>
